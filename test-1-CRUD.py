@@ -5,7 +5,11 @@ logging.basicConfig(level=logging.INFO)
 
 from TeleChanDB import TeleChanDB
 
-# Initialize with your bot token and channel ID
+'''
+Initialize with your bot token and channel ID.
+
+Your bot should be a channel admin with full rights.
+'''
 bot_token = ''
 channel_id = ''
 
