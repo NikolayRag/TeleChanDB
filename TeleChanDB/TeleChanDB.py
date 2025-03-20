@@ -289,22 +289,3 @@ class TeleChanDB:
 
 		log.info(f"Channel was inited, Schema created at {self.theSchema.schemaMessageId}")
 		return True
-
-
-	def delete_record(self, record_id):
-		if record_id in self.records:
-			message_id = self.records[record_id]
-			# Delete the message
-			self.bot.delete_message(self.channelId, message_id)
-			# Remove from records
-			del self.records[record_id]
-			# Save the index
-			self._save_index()
-		else:
-			print(f"Record '{record_id}' does not exist.")
-
-
-
-	def fetch_indices_list(self):
-		# Return the list of record IDs
-		return list(self.records.keys())
