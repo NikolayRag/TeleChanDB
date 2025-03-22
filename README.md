@@ -3,10 +3,7 @@
 
 ---
 
-## **1. Idea**
-
-
-### **Product Description**
+## **Product Description**
 
 **TeleChanDB** is a lightweight, decentralized database system that leverages the power of Telegram channels and bots by storing entire data, tags, and schema in one dedicated Telegram channel.  
 
@@ -25,7 +22,8 @@ The whole DB is a collection of: **Records**, **Tags** and **Schema**, which are
 Data itself is an ascii-encoded message, which is labeled by named **Tags** with optional value each.
 
 - **Tag**  
-An entity and a corresponding message that maintains mapping of named value to referenced **Records** messages by their channel Id's.
+An entity and a corresponding message that maintains mapping of named value to referenced **Records** messages by their channel Id's.  
+Implicit None tag is added to every **Record** to make it not orphan.
 
 - **Schema**  
 A list of **Tags** with corresponding messages Id's.  
@@ -59,5 +57,5 @@ Chat Description field as a fixed entry point that holds **Schema** message Id.
 ## **Legal Notes**
 
 TG itself and TG bots are not intended to be general database for automated use,
- but **TeleChanDB** acts nothing but acceptable way and stores data as readable messages, so it's user responsibility to apply **TeleChanDB** in reasonable way.
+ but **TeleChanDB** acts nothing but documented way and stores data as readable messages, so it's user responsibility to apply **TeleChanDB** in reasonable way.
  
