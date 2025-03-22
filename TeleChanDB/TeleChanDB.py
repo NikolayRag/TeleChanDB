@@ -90,7 +90,7 @@ class TeleChanDB:
 			return msgOut
 
 		except Exception as e:
-			log.info(f"Bot error at Message create,\n {e}")
+			log.info(f"Bot error at Message create,\n {e}\n")
 
 
 
@@ -100,7 +100,7 @@ class TeleChanDB:
 			return True
 
 		except Exception as e:
-			log.info(f"Bot error at Message Update,\n {e}")
+			log.info(f"Bot error at Message Update,\n {e}\n")
 
 
 
@@ -118,7 +118,7 @@ class TeleChanDB:
 			return cMsg
 
 		except Exception as e:
-			log.info(f"Bot error at Message Read,\n {e}")
+			log.info(f"Bot error at Message Read,\n {e}\n")
 
 
 
@@ -137,8 +137,8 @@ class TeleChanDB:
 	def _loadDscr(self, _fieldName="SchemaID"):
 		try:
 			tgChat = self.bot.get_chat(self.channelId)
-		except:
-			log.error(f"Bot error at Description Read,\n {e}")
+		except Exception as e:
+			log.error(f"Bot error at Description Read,\n {e}\n")
 			return
 
 		descriptJson = self.__jsonFromTG(tgChat.description)
@@ -164,7 +164,7 @@ class TeleChanDB:
 			return True
 
 		except Exception as e:
-			log.info(f"Bot error at Description Write,\n {e}")
+			log.info(f"Bot error at Description Write,\n {e}\n")
 
 
 
