@@ -29,7 +29,7 @@ class TCSchema:
 
 
 
-	def loadTag(self, tagN, tagMsgId):
+	def tagLoad(self, tagN, tagMsgId):
 		cTag = TCTag(tagN, tagMsgId, isSaved=True)
 		self.tagList[tagN] = cTag
 
@@ -182,7 +182,7 @@ class TeleChanDB:
 
 		# =todo 19 (check) +0: Load tags list
 		for cTagN, cTagMsgId in tagsList.items():
-			self.theSchema.loadTag(cTagN, cTagMsgId)
+			self.theSchema.tagLoad(cTagN, cTagMsgId)
 
 
 		return True
