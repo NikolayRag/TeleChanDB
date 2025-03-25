@@ -213,24 +213,15 @@ class TeleChanDB:
 	'''
 	Save Schema message
 	'''
-	def _saveSchema(self):
+	def _saveSchema(self, init=False):
 		schemaStr = self.theSchema.collectTags()
 		schemaStr = self.__jsonToTG(schemaStr)
 
 
-		if self.__botUpdate(self.theSchema.schemaMessageId, schemaStr):
-			return True
-
-		# =todo 13 (general) +0: Dump Tags
-
-
-
-	'''
-	Save blank Schema message
-	'''
-	def _initSchema(self):
-		schemaStr = self.theSchema.collectTags()
-		schemaStr = self.__jsonToTG(schemaStr)
+		if not init:
+			# =todo 13 (general) +0: Dump Tags
+			updOk = self.__botUpdate(self.theSchema.schemaMessageId, schemaStr)
+			return updOk
 
 
 		msg = self.__botSend(schemaStr)
@@ -281,7 +272,7 @@ class TeleChanDB:
 			return True
 
 
-		if not self._initSchema():
+		if not self._saveSchema(init=True):
 			return
 
 		if not self._saveDscr(self.theSchema.schemaMessageId):
