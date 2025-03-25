@@ -28,7 +28,8 @@ class TCSchema:
 		self.tagList = {} # {"<Tag>":TCTag, ..}
 
 
-	def addTag(self, tagN, tagMsgId):
+
+	def loadTag(self, tagN, tagMsgId):
 		cTag = TCTag(tagN, tagMsgId)
 		self.tagList[tagN] = cTag
 
@@ -36,7 +37,7 @@ class TCSchema:
 	def collectTags(self):
 		outT = {}
 		for tagN, tagV in self.tagList.items():
-			outT[tagN] = tagV.getMsgId()
+			outT[tagN] = tagV.getTagMsgId()
 		
 		return {"Type":"Schema", "Tags": outT}
 
@@ -52,7 +53,7 @@ class TCTag:
 
 
 
-	def getMsgId(self):
+	def getTagMsgId(self):
 		return self.tagMsgId
 
 
@@ -179,8 +180,8 @@ class TeleChanDB:
 
 
 		# =todo 19 (check) +0: Load tags list
-		for cTagN, cTagId in tagsList.items():
-			self.theSchema.addTag(cTagN, cTagId)
+		for cTagN, cTagMsgId in tagsList.items():
+			self.theSchema.loadTag(cTagN, cTagMsgId)
 
 
 		return True
