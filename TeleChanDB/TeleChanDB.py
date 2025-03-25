@@ -32,6 +32,20 @@ class TCSchema:
 	def tagLoad(self, tagN, tagMsgId):
 		cTag = TCTag(tagN, tagMsgId, isSaved=True)
 		self.tagList[tagN] = cTag
+	
+
+
+	'''
+	Specify Tag to Record mapping.
+	Create Tag if none yet.
+	'''
+	def tagMaintain(self, tagN, tagV, recId, remove=False):
+		if not tagN in self.tagList:
+			cTag = TCTag(tagN, 0, isSaved=False)
+			self.tagList[tagN] = cTag
+
+		cTag = self.tagList[tagN]
+		cTag.setMap(tagV, recId, remove)
 
 
 	def collectTags(self):
@@ -56,6 +70,22 @@ class TCTag:
 
 	def getTagMsgId(self):
 		return self.tagMsgId
+
+
+
+	def setMap(self, _value, _recId, _remove):
+		if _value not in self.recordsMap:
+			self.recordsMap[_value] = []
+		cMapValue = self.recordsMap[_value]
+
+
+		if _remove:
+			if _recId in cMapValue:
+				cMapValue.remove(_recId)
+
+		else:
+			if _recId not in cMapValue:
+				cMapValue += [_recId]
 
 
 
