@@ -30,7 +30,7 @@ class TCSchema:
 
 
 	def loadTag(self, tagN, tagMsgId):
-		cTag = TCTag(tagN, tagMsgId)
+		cTag = TCTag(tagN, tagMsgId, isSaved=True)
 		self.tagList[tagN] = cTag
 
 
@@ -45,11 +45,12 @@ class TCSchema:
 
 
 class TCTag:
-	def __init__(self, name, tagMsgId):
+	def __init__(self, name, tagMsgId, isSaved):
 		self.name = name
 		self.tagMsgId = tagMsgId
 		self.recordsMap = {} #{[None|<value>]:[<RecordMsgId>, ..], ..}
 
+		self.isSaved = isSaved
 
 
 
