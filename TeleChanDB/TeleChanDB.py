@@ -139,7 +139,7 @@ class TeleChanDB:
 		try:
 			tgChat = self.bot.get_chat(self.channelId)
 		except Exception as e:
-			log.error(f"Bot error at Description Read,\n {e}\n")
+			log.info(f"Bot error at Description Read,\n {e}\n")
 			return
 
 		descriptJson = self.__jsonFromTG(tgChat.description)
@@ -147,7 +147,7 @@ class TeleChanDB:
 			try:
 				return int(descriptJson[_fieldName])
 			except:
-				log.error(f"Bot error with Description format: {descriptJson[_fieldName]}")
+				log.info(f"Bot error with Description format: {descriptJson[_fieldName]}")
 				return
 
 
