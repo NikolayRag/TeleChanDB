@@ -28,8 +28,8 @@ class TCSchema:
 		self.tagList = {} # {"<Tag>":TCTag, ..}
 
 
-	def addTag(self, tagN, tagId):
-		cTag = TCTag(tagN, tagId)
+	def addTag(self, tagN, tagMsgId):
+		cTag = TCTag(tagN, tagMsgId)
 		self.tagList[tagN] = cTag
 
 
@@ -44,17 +44,16 @@ class TCSchema:
 
 
 class TCTag:
-	def __init__(self, name, msgId):
+	def __init__(self, name, tagMsgId):
 		self.name = name
-		self.msgId = msgId
-		self.map = {} #{[None|<value>]:[<RecordMsgId>, ..], ..}
+		self.tagMsgId = tagMsgId
+		self.recordsMap = {} #{[None|<value>]:[<RecordMsgId>, ..], ..}
 
-		self.isClean = True # drop if value updated from birth
 
 
 
 	def getMsgId(self):
-		return self.msgId
+		return self.tagMsgId
 
 
 
