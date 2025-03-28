@@ -24,6 +24,7 @@ Each Tag refers to it's own list of appliance.
 class TCSchema:
 	def __init__(self):
 		self.schemaMessageId = None
+		self.isSaved = True
 
 		self.tagList = {} # {"<Tag>":TCTag, ..}
 
@@ -43,6 +44,9 @@ class TCSchema:
 		if not tagN in self.tagList:
 			cTag = TCTag(tagN, 0, isSaved=False)
 			self.tagList[tagN] = cTag
+
+			self.isSaved = False
+
 
 		cTag = self.tagList[tagN]
 		cTag.setMap(tagV, recId, remove)
