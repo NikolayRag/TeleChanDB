@@ -87,9 +87,13 @@ class TCTag:
 			if _recId in cMapValue:
 				cMapValue.remove(_recId)
 
+				self.isSaved = False
+
 		else:
 			if _recId not in cMapValue:
 				cMapValue += [_recId]
+				
+				self.isSaved = False
 
 
 
