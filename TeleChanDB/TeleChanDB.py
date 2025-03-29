@@ -61,6 +61,10 @@ class TCSchema:
 
 
 
+	def collectTags(self):
+		return [t for n,t in self.tagList.items()]
+
+
 
 class TCTag:
 	def __init__(self, name, tagMsgId, isSaved):
@@ -252,6 +256,37 @@ class TeleChanDB:
 	Save Schema message
 	'''
 	def _saveSchema(self, init=False):
+
+		for cTag in self.theSchema.collectTags():
+			if cTag.isSaved:
+				continue
+
+
+			outTag = {
+				"Type": "Tag",
+				"Tag": cTag.name,
+				"Records": cTag.recordsMap
+			}
+			outTag = self.__jsonToTG(outTag)
+
+			if not cTag.tagMsgId: ## create tag message
+				tagId = self.__botSend(outTag)
+				if not tagId:
+					log.error(f"Tag not created")
+					return
+
+				cTag.tagMsgId = tagId.message_id
+
+			else: ## update existing
+				if not self.__botUpdate(cTag.tagMsgId, outTag):
+					log.error(f"Tag not updated for {cTag.tagMsgId} id")
+					return
+
+			cTag.isSaved = True
+
+			log.info(f"Tag '{cTag.name}' stored")
+
+
 
 		schemaStr = self.theSchema.collectSchema()
 		schemaStr = self.__jsonToTG(schemaStr)
