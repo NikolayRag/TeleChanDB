@@ -13,6 +13,7 @@ Your bot should be a channel admin with full rights.
 bot_token = ''
 channel_id = ''
 
+from test_keys import *
 
 '''
 Test cases for init:

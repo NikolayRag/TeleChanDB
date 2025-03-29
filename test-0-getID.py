@@ -6,8 +6,10 @@ print('''
 import telebot
 
 # Replace with your bot's token
-TOKEN = ""
-bot = telebot.TeleBot(TOKEN)
+bot_token = ""
+from test_keys import *
+
+bot = telebot.TeleBot(bot_token)
 
 # This function will be triggered when the bot receives a message in the channel
 @bot.message_handler(func=lambda m: True)
