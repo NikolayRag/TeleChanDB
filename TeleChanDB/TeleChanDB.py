@@ -362,3 +362,42 @@ class TeleChanDB:
 
 		log.info(f"Channel was inited, Schema created at {self.theSchema.schemaMessageId}")
 		return True
+
+
+
+	'''
+	Write new Record
+	'''
+	def write(self, content, tags={}):
+		if not self.channelId:
+			log.error(f"Channel is not inited")
+			return
+
+
+		tags[''] = None # Non-orphan tag
+
+		cRecord = self.__jsonToTG({
+			'Type': 'Record',
+			'Tags': tags,
+			'Data': content
+		})
+
+		sentRecord = self.__botSend(cRecord)
+		if not sentRecord:
+			log.error(f"Message write error: <{content[:25]}...>")
+			return
+		else:
+			log.info(f"Record saved for {sentRecord.message_id} id: : <{content[:15]}..>")
+
+
+		for tagN, tagV in tags.items():
+			self.theSchema.tagMaintain(tagN, tagV, sentRecord.message_id)
+
+		if not self._saveSchema():
+			log.error(f"Schema update error for record {sentRecord.message_id}")
+			return
+
+		return True
+		
+
+
