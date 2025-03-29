@@ -52,7 +52,7 @@ class TCSchema:
 		cTag.setMap(tagV, recId, remove)
 
 
-	def collectTags(self):
+	def collectSchema(self):
 		outT = {}
 		for tagN, tagV in self.tagList.items():
 			outT[tagN] = tagV.getTagMsgId()
@@ -252,9 +252,9 @@ class TeleChanDB:
 	Save Schema message
 	'''
 	def _saveSchema(self, init=False):
-		schemaStr = self.theSchema.collectTags()
-		schemaStr = self.__jsonToTG(schemaStr)
 
+		schemaStr = self.theSchema.collectSchema()
+		schemaStr = self.__jsonToTG(schemaStr)
 
 		if not init:
 			# =todo 13 (general) +0: Dump Tags
