@@ -257,9 +257,17 @@ class TeleChanDB:
 		schemaStr = self.__jsonToTG(schemaStr)
 
 		if not init:
-			# =todo 13 (general) +0: Dump Tags
-			updOk = self.__botUpdate(self.theSchema.schemaMessageId, schemaStr)
-			return updOk
+			if not self.theSchema.isSaved:
+				if not self.__botUpdate(self.theSchema.schemaMessageId, schemaStr):
+					log.error(f"Schema message not saved")
+					return
+
+				self.theSchema.isSaved = True
+
+			else:
+				log.info(f"No Schema changes")
+
+			return True
 
 
 		msg = self.__botSend(schemaStr)
