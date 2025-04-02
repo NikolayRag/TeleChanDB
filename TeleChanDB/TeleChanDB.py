@@ -152,7 +152,7 @@ class TeleChanDB:
 			try:
 				return int(descriptJson[_fieldName])
 			except:
-				log.info(f"Bot error with Description format: {descriptJson[_fieldName]}")
+				log.debug(f"Bot error with Description format: {descriptJson[_fieldName]}")
 				return
 
 
