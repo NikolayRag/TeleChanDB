@@ -142,7 +142,7 @@ class TeleChanDB:
 	Expected description format:
 	  > "SchemaMsgId": <SchemaMsgId>
 	'''
-	def _loadDscr(self, _fieldName="SchemaID"):
+	def _loadEntry(self, _fieldName="SchemaID"):
 		tgChat = self.bot.loadDscr(self.channelId)
 		if tgChat==None:
 			return
@@ -160,7 +160,7 @@ class TeleChanDB:
 	'''
 	Update channel description to store Schema message ID
 	'''
-	def _saveDscr(self, _newId, _fieldName="SchemaID"):
+	def _saveEntry(self, _newId, _fieldName="SchemaID"):
 		dscrNew = self.__jsonToTG(
 			{_fieldName: _newId}
 		)
@@ -300,13 +300,13 @@ class TeleChanDB:
 	'''
 	def _initChannel(self):
 
-		self.theSchema.schemaMessageId  = self._loadDscr()
 
 
 		if self.theSchema.schemaMessageId and self._loadSchema(): #Ok
 			# =todo 15 (general, schema) +0: Parse Tags
 #			for cTag in self.theSchema.tagList:
 #				clclc
+		self.theSchema.schemaMessageId = self._loadEntry()
 
 			return True
 
@@ -314,7 +314,7 @@ class TeleChanDB:
 		if not self._saveSchema(init=True):
 			return
 
-		if not self._saveDscr(self.theSchema.schemaMessageId):
+		if not self._saveEntry(self.theSchema.schemaMessageId):
 			return
 
 
