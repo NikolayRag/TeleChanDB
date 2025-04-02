@@ -11,6 +11,8 @@
 
 #  todo 2 (general, initial) +2: make basic Init/Create/Read/Update/Delete/List routines
 import telebot
+
+from .TGIO import *
 import json
 import time
 
@@ -127,43 +129,6 @@ class TeleChanDB:
 
 
 
-	def __botSend(self, _content):
-		try:
-			msgOut = self.bot.send_message(self.channelId, _content)
-			return msgOut
-
-		except Exception as e:
-			log.info(f"Bot error at Message create,\n {e}\n")
-
-
-
-	def __botUpdate(self, _msgId, _content):
-		try:
-			self.bot.edit_message_text(chat_id=self.channelId, message_id=_msgId, text=_content)
-			return True
-
-		except Exception as e:
-			log.info(f"Bot error at Message Update,\n {e}\n")
-
-
-
-#  todo 18 (optimize, tglimits, try) +0: Clean temporary messages at end mb
-	def __botRead(self, _chanId, _msgId):
-# -todo 17 (optimize, tglimits) +0: Allow batch read
-		try:
-			cMsg = self.bot.forward_message(
-				chat_id=_chanId,
-				from_chat_id=_chanId,
-				message_id=_msgId
-			)
-			self.bot.delete_message(chat_id=_chanId, message_id=cMsg.message_id)
-
-			return cMsg
-
-		except Exception as e:
-			log.info(f"Bot error at Message Read,\n {e}\n")
-
-
 
 	##
 	## PRIVATE FNs
@@ -178,13 +143,11 @@ class TeleChanDB:
 	  > "SchemaMsgId": <SchemaMsgId>
 	'''
 	def _loadDscr(self, _fieldName="SchemaID"):
-		try:
-			tgChat = self.bot.get_chat(self.channelId)
-		except Exception as e:
-			log.info(f"Bot error at Description Read,\n {e}\n")
+		tgChat = self.bot.loadDscr(self.channelId)
+		if tgChat==None:
 			return
 
-		descriptJson = self.__jsonFromTG(tgChat.description)
+		descriptJson = self.__jsonFromTG(tgChat)
 		if descriptJson and (_fieldName in descriptJson):
 			try:
 				return int(descriptJson[_fieldName])
@@ -202,12 +165,7 @@ class TeleChanDB:
 			{_fieldName: _newId}
 		)
 
-		try:
-			self.bot.set_chat_description(self.channelId, dscrNew)
-			return True
-
-		except Exception as e:
-			log.info(f"Bot error at Description Write,\n {e}\n")
+		return self.bot.saveDscr(self.channelId, dscrNew)
 
 
 
@@ -235,7 +193,7 @@ class TeleChanDB:
 	Load Schema and Tags Messages
 	'''
 	def _loadSchema(self):
-		schema_msg = self.__botRead(self.channelId, self.theSchema.schemaMessageId)
+		schema_msg = self.bot.read(self.channelId, self.theSchema.schemaMessageId)
 		if not schema_msg:
 			log.error("Schema load error")
 			return
@@ -270,7 +228,7 @@ class TeleChanDB:
 			outTag = self.__jsonToTG(outTag)
 
 			if not cTag.tagMsgId: ## create tag message
-				tagId = self.__botSend(outTag)
+				tagId = self.bot.send(self.channelId, outTag)
 				if not tagId:
 					log.error(f"Tag not created")
 					return
@@ -278,7 +236,7 @@ class TeleChanDB:
 				cTag.tagMsgId = tagId.message_id
 
 			else: ## update existing
-				if not self.__botUpdate(cTag.tagMsgId, outTag):
+				if not self.bot.update(self.channelId, cTag.tagMsgId, outTag):
 					log.error(f"Tag not updated for {cTag.tagMsgId} id")
 					return
 
@@ -293,7 +251,7 @@ class TeleChanDB:
 
 		if not init:
 			if not self.theSchema.isSaved:
-				if not self.__botUpdate(self.theSchema.schemaMessageId, schemaStr):
+				if not self.bot.update(self.channelId, self.theSchema.schemaMessageId, schemaStr):
 					log.error(f"Schema message not saved")
 					return
 
@@ -305,7 +263,7 @@ class TeleChanDB:
 			return True
 
 
-		msg = self.__botSend(schemaStr)
+		msg = self.bot.send(self.channelId, schemaStr)
 		if msg:
 			self.theSchema.schemaMessageId = msg.message_id
 
@@ -321,7 +279,7 @@ class TeleChanDB:
 
 
 	def __init__(self, botToken, channelId):
-		self.bot = telebot.TeleBot(botToken)
+		self.bot = TGIO(botToken)
 		self.channelId = channelId
 
 		self.theSchema = TCSchema()
@@ -382,7 +340,7 @@ class TeleChanDB:
 			'Data': content
 		})
 
-		sentRecord = self.__botSend(cRecord)
+		sentRecord = self.bot.send(self.channelId, cRecord)
 		if not sentRecord:
 			log.error(f"Message write error: <{content[:25]}...>")
 			return
