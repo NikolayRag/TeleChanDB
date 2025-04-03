@@ -332,8 +332,6 @@ class TeleChanDB:
 			return
 
 
-		tags[''] = None # Non-orphan tag
-
 		cRecord = self.__jsonToTG({
 			'Type': 'Record',
 			'Tags': tags,
@@ -347,6 +345,8 @@ class TeleChanDB:
 		else:
 			log.info(f"Record saved for {recordId} id: : <{content[:15]}..>")
 
+
+		tags[''] = 'id' # Non-orphan tag
 
 		for tagN, tagV in tags.items():
 			self.theSchema.tagMaintain(tagN, tagV, recordId)
