@@ -20,7 +20,7 @@ class TGIO:
 	def send(self, _chanId, _content):
 		try:
 			msgOut = self.bot.send_message(_chanId, _content)
-			return msgOut
+			return msgOut.message_id
 
 		except Exception as e:
 			log.debug(f"Bot error at Message create,\n {e}<\n")
