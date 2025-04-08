@@ -93,8 +93,9 @@ class TCTag:
 	Load entire Tag with mapping
 	'''
 	# -todo 21 (schema) +0: Load Tag Mapping
-	def set(self, _id):
-		self.tagMsgId = _id
+	def set(self, _id=0):
+		if _id:
+			self.tagMsgId = _id
 		self.isSaved = True
 
 
