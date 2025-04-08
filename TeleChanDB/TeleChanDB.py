@@ -44,6 +44,9 @@ class TCSchema:
 	'''
 	def tag(self, tagN, born=True):
 		if not tagN in self.tagList:
+			if not born:
+				return
+
 			cTag = TCTag(tagN, 0, isSaved=False)
 			self.tagList[tagN] = cTag
 
