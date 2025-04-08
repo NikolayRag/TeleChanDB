@@ -20,8 +20,7 @@ import logging as log
 
 
 '''
-Schema contains reference list of all used Tags.
-Each Tag refers to it's own list of appliance.
+Schema contains reference list of all used Tags messages.
 '''
 class TCSchema:
 	def __init__(self):
@@ -33,7 +32,7 @@ class TCSchema:
 
 
 	'''
-	Specify Tag to Record mapping.
+	Update Tag-to-Record mapping.
 	Create Tag if none yet.
 	'''
 	def tag(self, tagN, born=True):
@@ -66,6 +65,9 @@ class TCSchema:
 
 
 
+'''
+TCTag is a list of appliance to Records.
+'''
 class TCTag:
 	def __init__(self, name, tagMsgId, isSaved):
 		self.name = name
@@ -153,7 +155,7 @@ class TeleChanDB:
 	Get Schema message id from the Channel Description
 
 	Expected description format:
-	  > "SchemaMsgId": <SchemaMsgId>
+	  > "SchemaId": <SchemaMsgId>
 	'''
 	def _loadEntry(self, _fieldName="SchemaID"):
 		tgChat = self.bot.loadDscr(self.channelId)
@@ -224,7 +226,7 @@ class TeleChanDB:
 
 
 	'''
-	Save Schema message
+	Save Tags and Schema
 	'''
 	def _saveSchema(self, init=False):
 
