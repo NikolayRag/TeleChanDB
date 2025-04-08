@@ -32,12 +32,6 @@ class TCSchema:
 
 
 
-	def tagLoad(self, tagN, tagMsgId):
-		cTag = TCTag(tagN, tagMsgId, isSaved=True)
-		self.tagList[tagN] = cTag
-	
-
-
 	'''
 	Specify Tag to Record mapping.
 	Create Tag if none yet.
@@ -83,6 +77,16 @@ class TCTag:
 
 	def getTagMsgId(self):
 		return self.tagMsgId
+
+
+
+	'''
+	Load entire Tag with mapping
+	'''
+	# -todo 21 (schema) +0: Load Tag Mapping
+	def set(self, _id):
+		self.tagMsgId = _id
+		self.isSaved = True
 
 
 
@@ -185,7 +189,7 @@ class TeleChanDB:
 
 		# =todo 19 (check) +0: Load tags list
 		for cTagN, cTagMsgId in tagsList.items():
-			self.theSchema.tagLoad(cTagN, cTagMsgId)
+			self.theSchema.tag(cTagN).set(cTagMsgId)
 
 
 		return True
