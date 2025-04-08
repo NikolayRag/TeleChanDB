@@ -102,18 +102,18 @@ class TCTag:
 	def map(self, _value, _recId, _remove=False):
 		if _value not in self.recordsMap:
 			self.recordsMap[_value] = []
-		cMapValue = self.recordsMap[_value]
+		cMapList = self.recordsMap[_value]
 
 
 		if _remove:
-			if _recId in cMapValue:
-				cMapValue.remove(_recId)
+			if _recId in cMapList:
+				cMapList.remove(_recId)
 
 				self.isSaved = False
 
 		else:
-			if _recId not in cMapValue:
-				cMapValue += [_recId]
+			if _recId not in cMapList:
+				cMapList += [_recId]
 				
 				self.isSaved = False
 
