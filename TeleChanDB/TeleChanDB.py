@@ -54,7 +54,8 @@ class TCSchema:
 	def collectSchema(self):
 		outT = {}
 		for tagN, tagV in self.tagList.items():
-			outT[tagN] = tagV.getTagMsgId()
+			outT[tagN] = tagV.getMId()
+
 		
 		return {"Type":"Schema", "Tags": outT}
 
@@ -75,7 +76,7 @@ class TCTag:
 
 
 
-	def getTagMsgId(self):
+	def getMId(self):
 		return self.tagMsgId
 
 
