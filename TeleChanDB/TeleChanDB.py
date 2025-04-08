@@ -235,17 +235,17 @@ class TeleChanDB:
 			}
 			outTag = self.__jsonToTG(outTag)
 
-			if not cTag.tagMsgId: ## create tag message
+			if not cTag.getMId(): ## create tag message
 				tagId = self.bot.send(self.channelId, outTag)
 				if not tagId:
 					log.error(f"Tag not created")
 					return
 
-				cTag.tagMsgId = tagId
+				cTag.set(tagId)
 
 			else: ## update existing
-				if not self.bot.update(self.channelId, cTag.tagMsgId, outTag):
-					log.error(f"Tag not updated for {cTag.tagMsgId} id")
+				if not self.bot.update(self.channelId, cTag.getMId(), outTag):
+					log.error(f"Tag not updated for {cTag.getMId()} id")
 					return
 
 			cTag.isSaved = True
