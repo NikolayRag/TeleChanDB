@@ -11,7 +11,6 @@
 ### Network issues, API rate limits, or unexpected bot behavior can cause failures.
 #  todo 4 (feature, memo) +0: Incorporate robust error handling, retry logic, and logging to manage exceptions and maintain system stability.
 
-import telebot
 
 from .TGIO import *
 import json
@@ -134,8 +133,9 @@ class TeleChanDB:
 	'''
 	JSON to/from tg messages
 	'''
-	def __jsonToTG(self, _str):
-		return json.dumps(_str)
+	def __jsonToTG(self, _str, indent=None):
+		return json.dumps(_str, indent=indent)
+
 
 
 	def __jsonFromTG(self, _str):
@@ -214,7 +214,6 @@ class TeleChanDB:
 		if not schema_msg:
 			log.error("Schema load error")
 			return
-
 
 
 		cSchema = self.__jsonFromTG(schema_msg.text)
@@ -318,14 +317,9 @@ class TeleChanDB:
 	'''
 	def _initChannel(self):
 
-
-
-		if self.theSchema.schemaMessageId and self._loadSchema(): #Ok
-			# =todo 15 (general, schema) +0: Parse Tags
-#			for cTag in self.theSchema.tagList:
-#				clclc
 		self.theSchema.schemaMessageId = self._loadEntry()
 
+		if self.theSchema.schemaMessageId and self._loadSchema():
 			return True
 
 
