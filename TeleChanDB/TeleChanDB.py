@@ -36,12 +36,12 @@ class TCSchema:
 	Update Tag-to-Record mapping.
 	Create Tag if none yet.
 	'''
-	def tag(self, tagN, born=True):
+	def tag(self, tagN, id=0, born=True):
 		if not tagN in self.tagList:
 			if not born:
 				return
 
-			cTag = TCTag(tagN, 0, isSaved=False)
+			cTag = TCTag(tagN, id, isSaved=False)
 			self.tagList[tagN] = cTag
 
 			self.isSaved = False
