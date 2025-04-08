@@ -1,15 +1,16 @@
-### **Concurrency Management**
+# =todo 2 (general, initial) +2: make basic Init/Create/Read/Update/Delete/List routines
+# =todo 16 (checkpoint, memo) +2: Handle TG limits!
+# -todo 24 (checkpoint, tglimits, bot) +3: Make commit function and flow, as TG limits modification
+
+
+## **Concurrency Management**
 ### Multiple clients may perform operations simultaneously, leading to potential race conditions.
-#  todo 3 (general, memo) +0: Implement locking mechanisms or use versioning to manage concurrent access and ensure data consistency.
+#  todo 3 (feature, memo) +0: Implement locking mechanisms or use versioning to manage concurrent access and ensure data consistency.
 
 ### **Error Handling**
 ### Network issues, API rate limits, or unexpected bot behavior can cause failures.
-#  todo 4 (general, memo) +0: Incorporate robust error handling, retry logic, and logging to manage exceptions and maintain system stability.
+#  todo 4 (feature, memo) +0: Incorporate robust error handling, retry logic, and logging to manage exceptions and maintain system stability.
 
-#  todo 16 (general, memo) +2: Handle TG limits!
-
-
-#  todo 2 (general, initial) +2: make basic Init/Create/Read/Update/Delete/List routines
 import telebot
 
 from .TGIO import *
@@ -19,6 +20,7 @@ import time
 import logging as log
 
 
+# -todo 28 (tgio, limits) +0: implement lazy load and commit
 '''
 Schema contains reference list of all used Tags messages.
 '''
@@ -220,6 +222,7 @@ class TeleChanDB:
 			log.error("Schema format error")
 			return
 
+		# =todo 15 (general, schema) +0: Parse Tags
 		log.info(f"Schema loaded from msgId {self.theSchema.schemaMessageId} with {len(self.theSchema.tagList)} Tags")
 		return True
 
