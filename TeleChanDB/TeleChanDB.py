@@ -81,6 +81,11 @@ class TCTag:
 
 
 
+	def getMap(self):
+		return self.recordsMap
+
+
+
 	'''
 	Load entire Tag with mapping
 	'''
@@ -231,7 +236,7 @@ class TeleChanDB:
 			outTag = {
 				"Type": "Tag",
 				"Tag": cTag.name,
-				"Records": cTag.recordsMap
+				"Records": cTag.getMap()
 			}
 			outTag = self.__jsonToTG(outTag)
 
