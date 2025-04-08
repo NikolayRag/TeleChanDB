@@ -186,7 +186,10 @@ class TeleChanDB:
 
 
 
-	def __parseSchemaMsg(self, _jsSchema):
+	'''
+	Return Tags dict from Schema message
+	'''
+	def __validateSchemaMsg(self, _jsSchema):
 		if not _jsSchema:
 			return
 		if _jsSchema.get('Type') != 'Schema':
@@ -197,12 +200,7 @@ class TeleChanDB:
 			return
 
 
-		# =todo 19 (check) +0: Load tags list
-		for cTagN, cTagMsgId in tagsList.items():
-			self.theSchema.tag(cTagN).set(cTagMsgId)
-
-
-		return True
+		return tagsList
 
 
 
@@ -217,7 +215,8 @@ class TeleChanDB:
 
 
 		cSchema = self.__jsonFromTG(schema_msg.text)
-		if not self.__parseSchemaMsg(cSchema):
+		cTags = self.__validateSchemaMsg(cSchema)
+		if not cTags:
 			log.error("Schema format error")
 			return
 
