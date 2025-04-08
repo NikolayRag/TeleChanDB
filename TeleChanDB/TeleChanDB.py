@@ -42,7 +42,7 @@ class TCSchema:
 	Specify Tag to Record mapping.
 	Create Tag if none yet.
 	'''
-	def tagMaintain(self, tagN, tagV, recId, remove=False):
+	def tag(self, tagN, born=True):
 		if not tagN in self.tagList:
 			cTag = TCTag(tagN, 0, isSaved=False)
 			self.tagList[tagN] = cTag
@@ -50,8 +50,8 @@ class TCSchema:
 			self.isSaved = False
 
 
-		cTag = self.tagList[tagN]
-		cTag.setMap(tagV, recId, remove)
+		return self.tagList[tagN]
+
 
 
 	def collectSchema(self):
@@ -83,7 +83,7 @@ class TCTag:
 
 
 
-	def setMap(self, _value, _recId, _remove):
+	def map(self, _value, _recId, _remove=False):
 		if _value not in self.recordsMap:
 			self.recordsMap[_value] = []
 		cMapValue = self.recordsMap[_value]
@@ -349,7 +349,7 @@ class TeleChanDB:
 		tags[''] = 'id' # Non-orphan tag
 
 		for tagN, tagV in tags.items():
-			self.theSchema.tagMaintain(tagN, tagV, recordId)
+			self.theSchema.tag(tagN).map(tagV, recordId)
 
 		if not self._saveSchema():
 			log.error(f"Schema update error for record {recordId}")
