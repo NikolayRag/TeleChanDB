@@ -16,7 +16,11 @@ class TGIO:
 		self.bot = telebot.TeleBot(botToken)
 
 
+	'''
+	Send _content to the _chanId.
 
+	Return sent message Id or None on error
+	'''
 	def send(self, _chanId, _content):
 		try:
 			msgOut = self.bot.send_message(_chanId, _content)
@@ -27,6 +31,11 @@ class TGIO:
 
 
 
+	'''
+	Set content of _msgId in _chanId to _newContent.
+
+	Return True on success.
+	'''
 	def update(self, _chanId, _msgId, _newContent):
 		try:
 			self.bot.edit_message_text(chat_id=_chanId, message_id=_msgId, text=_newContent)
@@ -40,6 +49,11 @@ class TGIO:
 #  todo 25 (optimize, tglimits) +2: Make commit logic
 #  todo 18 (optimize, tglimits) +0: Clean temporary messages at end mb
 #  todo 17 (optimize, tglimits) +0: Allow batch read
+	'''
+	Read _msgId from _chanId.
+
+	Return message content or None on error.
+	'''
 	def read(self, _chanId, _msgId):
 		try:
 			cMsg = self.bot.forward_message(
