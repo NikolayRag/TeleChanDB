@@ -23,7 +23,7 @@ class TGIO:
 			return msgOut.message_id
 
 		except Exception as e:
-			log.debug(f"Bot error at Message create,\n {e}<\n")
+			log.info(f"Bot error at Message create,\n {e}<\n")
 
 
 
@@ -33,7 +33,7 @@ class TGIO:
 			return True
 
 		except Exception as e:
-			log.debug(f"Bot error at Message Update,\n {e}<\n")
+			log.info(f"Bot error at Message Update,\n {e}<\n")
 
 
 
@@ -52,7 +52,7 @@ class TGIO:
 			return cMsg.text
 
 		except Exception as e:
-			log.debug(f"Bot error at Message Read,\n {e}<\n")
+			log.info(f"Bot error at Message Read,\n {e}<\n")
 
 
 

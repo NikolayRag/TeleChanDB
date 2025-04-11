@@ -253,12 +253,12 @@ class TeleChanDB:
 
 			else: ## update existing
 				if not self.bot.update(self.channelId, cTag.getMId(), outTag):
-					log.error(f"Tag not updated for {cTag.getMId()} id")
+					log.error(f"Tag {cTag.getMId()} '{cTag.name}' not updated for {cTag.getMId()} id")
 					return
 
 			cTag.isSaved = True
 
-			log.info(f"Tag '{cTag.name}' stored")
+			log.info(f"Tag '{cTag.name}' stored with len {len(cTag.getMap())}")
 
 
 
