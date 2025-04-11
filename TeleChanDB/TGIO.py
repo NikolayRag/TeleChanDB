@@ -49,7 +49,7 @@ class TGIO:
 			)
 			self.bot.delete_message(chat_id=_chanId, message_id=cMsg.message_id)
 
-			return cMsg
+			return cMsg.text
 
 		except Exception as e:
 			log.debug(f"Bot error at Message Read,\n {e}<\n")

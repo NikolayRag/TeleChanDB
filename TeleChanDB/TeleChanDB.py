@@ -214,8 +214,7 @@ class TeleChanDB:
 			log.error("Schema load error")
 			return
 
-
-		cSchema = self.__jsonFromTG(schema_msg.text)
+		cSchema = self.__jsonFromTG(schemaMsg)
 		cTags = self.__validateSchemaMsg(cSchema)
 		if not cTags:
 			log.error("Schema format error")
