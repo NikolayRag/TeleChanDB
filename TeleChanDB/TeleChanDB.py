@@ -224,7 +224,7 @@ class TeleChanDB:
 			log.error("Schema format error")
 			return
 
-		# =todo 15 (general, schema) +0: Parse Tags
+
 		for cTagN, cTagId in cTags.items():
 			tagMsg = self.bot.read(self.channelId, cTagId)
 			tagData = self.__jsonFromTG(tagMsg)
