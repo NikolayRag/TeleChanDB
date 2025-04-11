@@ -44,7 +44,8 @@ class TCSchema:
 			cTag = TCTag(tagN, id, isSaved=False)
 			self.tagList[tagN] = cTag
 
-			self.isSaved = False
+			if not id:
+				self.isSaved = False
 
 
 		return self.tagList[tagN]
