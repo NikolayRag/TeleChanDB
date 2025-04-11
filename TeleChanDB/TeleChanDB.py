@@ -225,6 +225,18 @@ class TeleChanDB:
 			return
 
 		# =todo 15 (general, schema) +0: Parse Tags
+		for cTagN, cTagId in cTags.items():
+			tagMsg = self.bot.read(self.channelId, cTagId)
+			tagData = self.__jsonFromTG(tagMsg)
+
+			cTag = self.theSchema.tag(cTagN, id=cTagId)
+			for tagV, tagMap in tagData['Records'].items():
+				for recId in tagMap:
+					cTag.map(tagV, recId)
+
+			cTag.set()
+
+
 		log.info(f"Schema loaded from msgId {self.theSchema.schemaMessageId} with {len(self.theSchema.tagList)} Tags")
 		return True
 
