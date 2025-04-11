@@ -213,8 +213,8 @@ class TeleChanDB:
 	Load Schema and Tags Messages
 	'''
 	def _loadSchema(self):
-		schema_msg = self.bot.read(self.channelId, self.theSchema.schemaMessageId)
-		if not schema_msg:
+		schemaMsg = self.bot.read(self.channelId, self.theSchema.schemaMessageId)
+		if not schemaMsg:
 			log.error("Schema load error")
 			return
 
