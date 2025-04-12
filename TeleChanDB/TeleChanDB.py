@@ -44,7 +44,8 @@ class TCSchema:
 			cTag = TCTag(tagN, id, isSaved=False)
 			self.tagList[tagN] = cTag
 
-			if not id:
+			if not id: # loaded are saved obviously
+				log.info(f"New Tag <{tagN}>")
 				self.isSaved = False
 
 
@@ -104,6 +105,7 @@ class TCTag:
 	def map(self, _value, _recId, _remove=False):
 		_value = str(_value) if _value!=None else ''
 
+		## init empty list for value
 		if _value not in self.recordsMap:
 			self.recordsMap[_value] = []
 		cMapList = self.recordsMap[_value]
@@ -230,6 +232,7 @@ class TeleChanDB:
 
 			cTag = self.theSchema.tag(cTagN, id=cTagId)
 			for tagV, tagMap in tagData['Records'].items():
+				log.debug(f"Tag '{cTagN}' bound: {tagV} to {tagMap}")
 				for recId in tagMap:
 					cTag.map(tagV, recId)
 
