@@ -102,9 +102,8 @@ class TCTag:
 
 
 	def map(self, _value, _recId, _remove=False):
-		if not _value:
-			_value = ''
-		_value = str(_value)
+		_value = str(_value) if _value!=None else ''
+
 		if _value not in self.recordsMap:
 			self.recordsMap[_value] = []
 		cMapList = self.recordsMap[_value]
