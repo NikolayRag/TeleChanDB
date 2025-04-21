@@ -353,8 +353,22 @@ class TeleChanDB:
 
 
 	'''
-	Write new Record
+	List available values for specified /tags/
+	If no /tags/ specified, list all tags names except implicit ''
 	'''
+	def list(self, tags=[]):
+		if not self.channelId:
+			log.error(f"Channel is not inited")
+			return
+
+		lTags = self.theSchema.collectTags()
+
+		if not tags:
+			return [t.name for t in lTags]
+
+		tl = {t.name:[v for v in t.getMap().keys()] for t in lTags if t.name in tags}
+		print(tl)
+
 	def write(self, content, tags={}):
 		if not self.channelId:
 			log.error(f"Channel is not inited")
