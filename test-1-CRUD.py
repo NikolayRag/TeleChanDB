@@ -32,3 +32,8 @@ Test cases for init:
 print(f"Test Init")
 tcdb = TeleChanDB(bot_token, channel_id)
 
+
+print(f"Test Create")
+tcdb.write('The first test record.', tags={'test':None, 'someTag':1})
+tcdb.write('Second record.', tags={'test':None, 'someTag':2})
+tcdb.write('One more record.', tags={'someTag':3, 'otherTag':None})
