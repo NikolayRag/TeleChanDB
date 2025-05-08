@@ -377,8 +377,6 @@ class TeleChanDB:
 		return {tN:tV for tN,tV in tList.items() if tN in tags}
 
 
-		tl = {t.name:[v for v in t.getMap().keys()] for t in lTags if t.name in tags}
-		print(tl)
 
 	def write(self, content, tags={}):
 		if not self.channelId:
