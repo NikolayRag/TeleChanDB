@@ -42,6 +42,8 @@ print(f"Test Create")
 tcdb.write('The first test record.', tags={'test':None, 'someTag':1})
 tcdb.write('Second record.', tags={'test':None, 'someTag':2})
 tcdb.write('One more record.', tags={'someTag':3, 'otherTag':None})
+tagsV = tcdb.list(['someTag', ''], ids=True)
+print(f"Tags listed: {tagsV}")
 
 tagsV = tcdb.list(['someTag', 'test', ''])
 print(f"Tags values: {tagsV}")

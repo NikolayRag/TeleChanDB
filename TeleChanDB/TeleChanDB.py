@@ -353,18 +353,29 @@ class TeleChanDB:
 
 
 	'''
-	List available values for specified /tags/
-	If no /tags/ specified, list all tags names except implicit ''
+	List values for specified /tags/
+	If no /tags/ specified, list all tags and they values.
+
+	If /ids/ set, list dicts of {/value/:[id,..],..}
 	'''
-	def list(self, tags=[]):
+	def list(self, tags=[], ids=False):
 		if not self.channelId:
 			log.error(f"Channel is not inited")
 			return
 
-		lTags = self.theSchema.collectTags()
+		tagsA = self.theSchema.collectTags()
 
 		if not tags:
-			return [t.name for t in lTags]
+			tags = [t.name for t in tagsA]
+
+
+		if ids:
+			tList = {t.name:{vK:vV for vK,vV in t.getMap().items()} for t in tagsA}
+		else:
+			tList = {t.name:[v for v in t.getMap().keys()] for t in tagsA}
+
+		return {tN:tV for tN,tV in tList.items() if tN in tags}
+
 
 		tl = {t.name:[v for v in t.getMap().keys()] for t in lTags if t.name in tags}
 		print(tl)
