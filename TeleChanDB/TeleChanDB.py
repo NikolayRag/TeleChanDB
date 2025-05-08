@@ -407,7 +407,7 @@ class TeleChanDB:
 			log.error(f"Schema update error for record {recordId}")
 			return
 
-		return True
+		return recordId
 		
 
 
