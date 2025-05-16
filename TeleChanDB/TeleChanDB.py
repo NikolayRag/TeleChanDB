@@ -441,7 +441,7 @@ class TeleChanDB:
 			log.info(f"Record saved for {recordId} id: : <{content[:15]}..>")
 
 
-		tags[''] = 'id' # Non-orphan tag
+		tags[''] = '' # Non-orphan tag
 
 		for tagN, tagV in tags.items():
 			self.theSchema.tag(tagN).map(tagV, recordId)
