@@ -358,14 +358,14 @@ class TeleChanDB:
 
 	If /ids/ set, list dicts of {/value/:[id,..],..}
 	'''
-	def list(self, tags=[], ids=False):
+	def list(self, tags=False, ids=False):
 		if not self.channelId:
 			log.error(f"Channel is not inited")
 			return
 
 		tagsA = self.theSchema.collectTags()
 
-		if not tags:
+		if tags == False:
 			tags = [t.name for t in tagsA]
 
 
