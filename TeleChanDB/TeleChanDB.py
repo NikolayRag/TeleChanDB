@@ -353,10 +353,11 @@ class TeleChanDB:
 
 
 	'''
-	List values for specified /tags/
-	If no /tags/ specified, list all tags and they values.
+	List values for specified /tags/ list as {tag:[value,..],..} dict.
+	If no /tags/ specified, list all tags and they values
+	 including {'':''} implicit tag.
 
-	If /ids/ set, list dicts of {/value/:[id,..],..}
+	If /ids/ set, list dicts of {tag:{value:[id,..],..} }
 	'''
 	def list(self, tags=False, ids=False):
 		if not self.channelId:
@@ -421,6 +422,11 @@ class TeleChanDB:
 		return msgOut
 
 
+
+	'''
+	Create new record with /content/ provided and /tags/ in form of {tag:value,..}
+	Implicit tag {'':''} implied to every new record.
+	'''
 	def write(self, content, tags={}):
 		if not self.channelId:
 			log.error(f"Channel is not inited")
