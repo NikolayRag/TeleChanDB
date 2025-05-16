@@ -378,6 +378,29 @@ class TeleChanDB:
 
 
 
+	'''
+	read(), change(), delete() references records by
+	 tags={tag:[value,..],..} dict
+	 and ids=[id,..] list provided.
+	'''
+
+
+	def _getIdsbyTagsVals(self, tags, ids):
+		idsOut = list(ids)
+
+		tagList = self.list(tags=tags.keys(), ids=True)
+		for t,v in tagList.items():
+			tVals = tags[t]
+			if (type(tVals) is not tuple) and (type(tVals) is not list):
+				tVals = [tVals]
+
+			for tId in tVals:
+				vKey = str(tId)
+				if vKey in v:
+					idsOut += v[vKey]
+
+		return list(set(idsOut)) #unduplicate
+
 	def write(self, content, tags={}):
 		if not self.channelId:
 			log.error(f"Channel is not inited")
