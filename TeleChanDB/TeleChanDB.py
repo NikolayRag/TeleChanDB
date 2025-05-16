@@ -401,6 +401,26 @@ class TeleChanDB:
 
 		return list(set(idsOut)) #unduplicate
 
+
+	'''
+	Read messages.
+	'''
+	def read(self, tags={}, ids=[]):
+		if not self.channelId:
+			log.error(f"Channel is not inited")
+			return
+
+		readIds = self._getIdsbyTagsVals(tags,ids)
+
+		msgOut = {}
+		for rId in readIds:
+			cRecord = self.bot.read(self.channelId, rId)
+			msgOut[rId] = self.__jsonFromTG(cRecord)
+
+
+		return msgOut
+
+
 	def write(self, content, tags={}):
 		if not self.channelId:
 			log.error(f"Channel is not inited")
