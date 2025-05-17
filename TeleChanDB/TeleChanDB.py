@@ -460,4 +460,24 @@ class TeleChanDB:
 		return recordId
 		
 
+	'''
+	Change Data ot Tags for one record referenced by /id/
+	'''
+	def change(self, _id, data=None, tags=None):
+		if not self.channelId:
+			log.error(f"Channel is not inited")
+			return
+
+		cRecord = self.bot.read(self.channelId, _id)
+		cRecord = self.__jsonFromTG(cRecord)
+		if cRecord == None:
+			return
+			
+		if cRecord['Type']=='Record':
+			if data:
+				cRecord['Data'] = data
+
+			cRecord = self.__jsonToTG(cRecord)
+			return self.bot.update(self.channelId, _id, cRecord)
+
 
