@@ -46,6 +46,6 @@ testId = tcdb.write('By id.', tags={'someTag':2})
 tagsV = tcdb.list(['someTag', ''], ids=True)
 print(f"Tags listed: {tagsV}")
 
-readData = tcdb.read(tags={'someTag':1}, ids=testId)
+readData = tcdb.read(tags={'someTag':1}, ids=[testId])
 for cId,cRecord in readData.items():
 	print(f"{cId}: {json.dumps(cRecord, indent=4)}")
