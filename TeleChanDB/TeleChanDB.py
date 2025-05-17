@@ -36,6 +36,7 @@ class TCSchema:
 	Update Tag-to-Record mapping.
 	Create Tag if none yet.
 	'''
+#  todo 30 (flow, global) +0l: Split loading and operating
 	def tag(self, tagN, id=0, born=True):
 		if not tagN in self.tagList:
 			if not born:
