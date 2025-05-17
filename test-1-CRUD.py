@@ -51,3 +51,11 @@ print(f"\n    Test Read by Tags and Id")
 readData = tcdb.read(tags={'someTag':1}, ids=[testId])
 for cId,cRecord in readData.items():
 	print(f"{cId}: {json.dumps(cRecord, indent=4)}")
+
+
+
+print(f"\n    Test Change")
+tcdb.change(testId, 'Changed by id')
+changedData = tcdb.read(ids=[testId])
+print(f"\nRecord {testId} changed:\n{changedData[testId]}")
+
