@@ -472,14 +472,21 @@ class TeleChanDB:
 		cRecord = self.__jsonFromTG(cRecord)
 		if cRecord == None:
 			return
-			
+
+		needUpd = False
+
 		if cRecord['Type']=='Record':
 			if data:
-				cRecord['Data'] = data
+				if cRecord['Data'] != data:
+					cRecord['Data'] = data
+					needUpd = True
+
 # -todo 34 (maintain) +0: Update tags if record tags changed
 #			if tags:
 #				cRecord['Tags'] = tags
 
+
+		if needUpd:
 			cRecord = self.__jsonToTG(cRecord)
 			return self.bot.update(self.channelId, _id, cRecord)
 
