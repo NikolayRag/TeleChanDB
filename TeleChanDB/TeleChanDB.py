@@ -265,14 +265,14 @@ class TeleChanDB:
 			if not cTag.getMId(): ## create tag message
 				tagId = self.bot.send(self.channelId, outTag)
 				if not tagId:
-					log.error(f"Tag not created")
+					log.error(f"Tag creation error")
 					return
 
 				cTag.set(tagId)
 
 			else: ## update existing
 				if not self.bot.update(self.channelId, cTag.getMId(), outTag):
-					log.error(f"Tag {cTag.getMId()} '{cTag.name}' not updated for {cTag.getMId()} id")
+					log.error(f"Tag {cTag.getMId()} '{cTag.name}' update error for {cTag.getMId()} id")
 					return
 
 			cTag.isSaved = True
@@ -296,7 +296,7 @@ class TeleChanDB:
 		#else update
 		if not self.theSchema.isSaved:
 			if not self.bot.update(self.channelId, self.theSchema.schemaMessageId, schemaStr):
-				log.error(f"Schema message not saved")
+				log.error(f"Schema save error")
 				return
 
 			self.theSchema.isSaved = True
@@ -456,7 +456,6 @@ class TeleChanDB:
 			self.theSchema.tag(tagN).map(tagV, recordId)
 
 		if not self._saveSchema():
-			log.error(f"Schema update error for record {recordId}")
 			return
 
 		return recordId
