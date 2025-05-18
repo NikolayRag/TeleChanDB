@@ -246,7 +246,7 @@ class TeleChanDB:
 
 
 	'''
-	Save Tags and Schema
+	Save Tags and Schema. Create new /Tag/ messages if needed or update existing.
 	'''
 	def _saveSchema(self, init=False):
 
@@ -284,25 +284,27 @@ class TeleChanDB:
 		schemaStr = self.theSchema.collectSchema()
 		schemaStr = self.__jsonToTG(schemaStr)
 
-		if not init:
-			if not self.theSchema.isSaved:
-				if not self.bot.update(self.channelId, self.theSchema.schemaMessageId, schemaStr):
-					log.error(f"Schema message not saved")
-					return
+		if init:
+			msgId = self.bot.send(self.channelId, schemaStr)
+			if not msgId:
+				return
 
-				self.theSchema.isSaved = True
-
-			else:
-				log.info(f"No Schema changes")
-
-			return True
-
-
-		msgId = self.bot.send(self.channelId, schemaStr)
-		if msgId:
 			self.theSchema.schemaMessageId = msgId
-
 			return True
+
+
+		#else update
+		if not self.theSchema.isSaved:
+			if not self.bot.update(self.channelId, self.theSchema.schemaMessageId, schemaStr):
+				log.error(f"Schema message not saved")
+				return
+
+			self.theSchema.isSaved = True
+
+		else:
+			log.info(f"No Schema changes")
+
+		return True
 
 
 
