@@ -102,6 +102,14 @@ class TCTag:
 		self.isSaved = True
 
 
+	'''
+	Replace entire mapping with _tags for _recordId
+	'''
+	def setMap(self, _tags, _recordId):
+		for tagN, tagV in _tags.items():
+			self.theSchema.tag(tagN).map(tagV, _recordId)
+
+
 
 	def map(self, _value, _recId, _remove=False):
 		_value = str(_value) if _value!=None else ''
@@ -452,8 +460,7 @@ class TeleChanDB:
 
 		tags[''] = '' # Non-orphan tag
 
-		for tagN, tagV in tags.items():
-			self.theSchema.tag(tagN).map(tagV, recordId)
+		self.theSchema.tag(tagN).setMap(tags, recordId)
 
 		if not self._saveSchema():
 			return
