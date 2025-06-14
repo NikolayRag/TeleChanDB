@@ -435,10 +435,10 @@ class TeleChanDB:
 
 
 	'''
-	Create new record with /content/ provided and /tags/ in form of {tag:value,..}
+	Create new record with /_content/ provided and /tags/ in form of {tag:value,..}
 	Implicit tag {'':''} implied to every new record.
 	'''
-	def write(self, content, tags={}):
+	def write(self, _content, tags={}):
 		if not self.channelId:
 			log.error(f"Channel is not inited")
 			return
@@ -447,15 +447,15 @@ class TeleChanDB:
 		cRecord = self.__jsonToTG({
 			'Type': 'Record',
 			'Tags': tags,
-			'Data': content
+			'Data': _content
 		})
 
 		recordId = self.bot.send(self.channelId, cRecord)
 		if not recordId:
-			log.error(f"Message write error: <{content[:25]}...>")
+			log.error(f"Message write error: <{_content[:25]}...>")
 			return
 		else:
-			log.info(f"Record saved for {recordId} id: : <{content[:15]}..>")
+			log.info(f"Record saved for {recordId} id: : <{_content[:15]}..>")
 
 
 		tags[''] = '' # Non-orphan tag
@@ -471,7 +471,7 @@ class TeleChanDB:
 	'''
 	Change Data ot Tags for one record referenced by /id/
 	'''
-	def change(self, _id, data=None, tags=None):
+	def change(self, _id, content=None, tags=None):
 		if not self.channelId:
 			log.error(f"Channel is not inited")
 			return
@@ -484,9 +484,9 @@ class TeleChanDB:
 		needUpd = False
 
 		if cRecord['Type']=='Record':
-			if data:
-				if cRecord['Data'] != data:
-					cRecord['Data'] = data
+			if content:
+				if cRecord['Data'] != content:
+					cRecord['Data'] = content
 					needUpd = True
 
 # -todo 34 (maintain) +0: Update tags if record tags changed
