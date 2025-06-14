@@ -489,13 +489,34 @@ class TeleChanDB:
 					cRecord['Data'] = content
 					needUpd = True
 
-# -todo 34 (maintain) +0: Update tags if record tags changed
-#			if tags:
-#				cRecord['Tags'] = tags
+			if tags:
+				cRecord['Tags'] = tags
+				cTags = self.theSchema.collectTags()
+				
+				#remove non-listed
+				for cTag in cTags:
+					if cTag.name=='': continue
+
+					for ctVal in cTag.getMap():
+						cTag.map(ctVal, _id, _remove=True)
+
+
+				for tagN, tagV in tags.items():
+					self.theSchema.tag(tagN).map(tagV, _id)
+
+				needUpd = True
 
 
 		if needUpd:
 			cRecord = self.__jsonToTG(cRecord)
-			return self.bot.update(self.channelId, _id, cRecord)
 
+
+			isOk = self.bot.update(self.channelId, _id, cRecord)
+			if not isOk:
+				return
+
+			if not self._saveSchema():
+				return
+
+			return True
 
