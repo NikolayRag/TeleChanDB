@@ -318,7 +318,7 @@ class TeleChanDB:
 
 			cTag.isSaved = True
 
-			log.info(f"Tag '{cTag.name}' stored with len {len(cTag.getMap())}")
+			log.info(f"Tag '{cTag.name}' stored for {len(cTag.getMap())} records")
 
 
 
@@ -513,6 +513,7 @@ class TeleChanDB:
 		cRecord = self.__jsonFromTG(cRecord)
 		if cRecord == None:
 			return
+
 
 		needUpd = False
 
