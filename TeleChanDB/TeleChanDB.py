@@ -517,27 +517,15 @@ class TeleChanDB:
 		needUpd = False
 
 		if cRecord['Type']=='Record':
-			if content:
-				if cRecord['Data'] != content:
-					cRecord['Data'] = content
-					needUpd = True
-
-			if tags:
-				cRecord['Tags'] = tags
-				cTags = self.theSchema.collectTags()
-				
-				#remove non-listed
-				for cTag in cTags:
-					if cTag.name=='': continue
-
-					for ctVal in cTag.getMap():
-						cTag.map(ctVal, _id, _remove=True)
-
-
-				for tagN, tagV in tags.items():
-					self.theSchema.tag(tagN).map(tagV, _id)
-
+			if (content != None) and (cRecord['Data'] != content):
+				cRecord['Data'] = content
 				needUpd = True
+
+
+			if (tags != None) and (cRecord['Tags'] != tags):
+				cRecord['Tags'] = tags
+				self.theSchema.maintain(_id, tags)
+				needUpd=True
 
 
 		if needUpd:
