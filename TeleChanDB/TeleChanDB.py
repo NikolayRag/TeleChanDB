@@ -69,6 +69,37 @@ class TCSchema:
 
 
 
+	'''
+	Set /_id/ presence within provided {tagName:tagValue,..} dict
+	'''
+	#  todo 36 (api) -1: Allow tag values lists
+	def maintain(self, _id, tags):
+		isChanged = False
+
+		cTags = self.collectTags()
+		
+		#remove /id/ from all values not listed in new provided tags
+		for cTag in cTags:
+			if cTag.name=='':
+				continue
+
+			for ctVal in cTag.getMap():
+				if (cTag.name in tags) and (str(ctVal) == str(tags[cTag.name])):
+					continue
+
+				cTag.map(ctVal, _id, _remove=True)
+
+				isChanged = True
+
+
+		#add /id/ to provided tags
+		for tagN, tagV in tags.items():
+			if self.tag(tagN).map(tagV, _id):
+				isChanged = True
+
+		return isChanged
+
+
 '''
 TCTag is a list of appliance to Records.
 '''
