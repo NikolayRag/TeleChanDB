@@ -125,12 +125,14 @@ class TCTag:
 				cMapList.remove(_recId)
 
 				self.isSaved = False
+				return True
 
 		else:
 			if _recId not in cMapList:
 				cMapList += [_recId]
 				
 				self.isSaved = False
+				return True
 
 
 
