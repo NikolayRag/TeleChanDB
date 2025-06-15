@@ -83,7 +83,8 @@ class TCSchema:
 			if cTag.name=='':
 				continue
 
-			for ctVal in cTag.getMap():
+			ctMap = list(cTag.getMap().keys()) #to remove iteration size changing
+			for ctVal in ctMap:
 				if (cTag.name in tags) and (str(ctVal) == str(tags[cTag.name])):
 					continue
 
@@ -154,6 +155,8 @@ class TCTag:
 		if _remove:
 			if _recId in cMapList:
 				cMapList.remove(_recId)
+				if not cMapList: #cleanup
+					del self.recordsMap[_value]
 
 				self.isSaved = False
 				return True
