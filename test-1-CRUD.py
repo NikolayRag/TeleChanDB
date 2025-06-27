@@ -33,6 +33,8 @@ Test cases for init:
 
 print(f"\n    Test Init")
 tcdb = TeleChanDB(bot_token, channel_id)
+if not tcdb.isInited():
+	exit()
 
 
 print(f"\n    Test Create")

@@ -399,6 +399,11 @@ class TeleChanDB:
 
 
 
+	def isInited(self):
+		return not not self.channelId
+
+
+
 	'''
 	List values for specified /tags/ list as {tag:[value,..],..} dict.
 	If no /tags/ specified, list all tags and they values
@@ -407,7 +412,7 @@ class TeleChanDB:
 	If /ids/ set, list dicts of {tag:{value:[id,..],..} }
 	'''
 	def list(self, tags=False, ids=False):
-		if not self.channelId:
+		if not self.isInited():
 			log.error(f"Channel is not inited")
 			return
 
@@ -454,7 +459,7 @@ class TeleChanDB:
 	Read messages.
 	'''
 	def read(self, tags={}, ids=[]):
-		if not self.channelId:
+		if not self.isInited():
 			log.error(f"Channel is not inited")
 			return
 
@@ -475,7 +480,7 @@ class TeleChanDB:
 	Implicit tag {'':''} implied to every new record.
 	'''
 	def write(self, _content, tags={}):
-		if not self.channelId:
+		if not self.isInited():
 			log.error(f"Channel is not inited")
 			return
 
@@ -508,7 +513,7 @@ class TeleChanDB:
 	Change Data ot Tags for one record referenced by /id/
 	'''
 	def change(self, _id, content=None, tags=None):
-		if not self.channelId:
+		if not self.isInited():
 			log.error(f"Channel is not inited")
 			return
 
