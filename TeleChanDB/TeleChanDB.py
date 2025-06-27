@@ -73,14 +73,14 @@ class TCSchema:
 	Set /_id/ presence within provided {tagName:tagValue,..} dict
 	'''
 	#  todo 36 (api) -1: Allow tag values lists
-	def maintain(self, _id, tags):
+	def maintain(self, _id, tags, skipImp=True):
 		isChanged = False
 
 		cTags = self.collectTags()
 		
 		#remove /id/ from all values not listed in new provided tags
 		for cTag in cTags:
-			if cTag.name=='':
+			if skipImp and cTag.name=='':
 				continue
 
 			ctMap = list(cTag.getMap().keys()) #to remove iteration size changing
@@ -559,7 +559,7 @@ class TeleChanDB:
 
 
 		for cId in delIds:
-			self.theSchema.maintain(cId, {})
+			self.theSchema.maintain(cId, {}, skipImp=False)
 
 			self.bot.delete(self.channelId, cId)
 
