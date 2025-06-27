@@ -501,7 +501,7 @@ class TeleChanDB:
 
 		tags[''] = '' # Non-orphan tag
 
-		self.theSchema.tag(tagN).setMap(tags, recordId)
+		self.theSchema.maintain(recordId, tags)
 
 		if not self._saveSchema():
 			return
