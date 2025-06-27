@@ -1,7 +1,7 @@
 # =todo 2 (general, initial) +2: make basic Init/Create/Read/Update/Delete/List routines
 # =todo 16 (checkpoint, memo) +2: Handle TG limits!
 # -todo 24 (checkpoint, tglimits, bot) +3: Make commit function and flow, as TG limits modification
-
+#  todo 37 (refactor, flow) +0: deal with implicit '' tag other way
 
 ## **Concurrency Management**
 ### Multiple clients may perform operations simultaneously, leading to potential race conditions.
@@ -463,7 +463,7 @@ class TeleChanDB:
 			log.error(f"Channel is not inited")
 			return
 
-		readIds = self._getIdsbyTagsVals(tags,ids)
+		readIds = self._getIdsbyTagsVals(tags, ids)
 
 		msgOut = {}
 		for rId in readIds:
@@ -501,7 +501,10 @@ class TeleChanDB:
 
 		tags[''] = '' # Non-orphan tag
 
+
+		# =todo 41 (schema, tags) +0: .maintain() implicit "" tag as well
 		self.theSchema.maintain(recordId, tags)
+
 
 		if not self._saveSchema():
 			return
@@ -539,7 +542,6 @@ class TeleChanDB:
 
 		if needUpd:
 			cRecord = self.__jsonToTG(cRecord)
-
 
 			isOk = self.bot.update(self.channelId, _id, cRecord)
 			if not isOk:

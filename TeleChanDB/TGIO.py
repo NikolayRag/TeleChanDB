@@ -3,6 +3,8 @@ import telebot
 import logging as log
 
 
+#  todo 26 (tgio, limits) +0: make delayed async flow with sync in bg
+#  todo 27 (tgio, limits) +0: make shadow commiting 
 '''
 General TG messages read-write interface.
 
