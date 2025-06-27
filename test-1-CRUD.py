@@ -38,12 +38,12 @@ if not tcdb.isInited():
 
 
 print(f"\n----\nTest Create")
-
-
 tcdb.write('The first test record.', tags={'test':None, 'someTag':1})
 tcdb.write('Second record.', tags={'test':None, 'someTag':2})
 tcdb.write('One more record.', tags={'someTag':3, 'otherTag':None})
 testId = tcdb.write('By id.', tags={'someTag':2})
+
+
 print(f"\n----\nTest List")
 tagsV = tcdb.list(['someTag', ''], ids=True)
 if tagsV==None:
@@ -77,5 +77,7 @@ print(f"Deleted {delData}")
 
 
 changedData = tcdb.read(ids=[testId])
-print(f"\nRecord {testId} changed:\n{changedData[testId]}")
+if not changedData:
+	exit()
 
+print(f"\nRecord {testId} changed:\n{changedData[testId]}")
