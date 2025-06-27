@@ -70,6 +70,22 @@ class TGIO:
 
 
 
+	'''
+	Delete _msgId from _chanId.
+
+	Return True on success.
+	'''
+	def delete(self, _chanId, _msgId):
+		try:
+			self.bot.delete_message(chat_id=_chanId, message_id=_msgId)
+
+			return True
+
+		except Exception as e:
+			log.info(f"Bot error at Message Delete,\n {e}<\n")
+
+
+
 
 	'''
 	Get Schema message id from the Channel Description

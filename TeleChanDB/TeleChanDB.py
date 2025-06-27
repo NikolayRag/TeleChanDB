@@ -550,3 +550,28 @@ class TeleChanDB:
 
 			return True
 
+
+
+	'''
+	Delete Records
+	'''
+	def delete(self, tags={}, ids=[]):
+		if not self.isInited():
+			log.error(f"Channel is not inited")
+			return
+
+		delIds = self._getIdsbyTagsVals(tags, ids)
+		log.info(f"To delete: {delIds}")
+
+
+		for cId in delIds:
+			self.theSchema.maintain(cId, {})
+
+			self.bot.delete(self.channelId, cId)
+
+
+		if not self._saveSchema():
+			log.error("Error while saving schema at Record delete, may be out of sync")
+			return
+
+		return delIds
