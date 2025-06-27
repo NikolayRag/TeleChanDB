@@ -68,6 +68,14 @@ if not changeOk:
 	exit()
 
 
+input("Press Enter to finalize test...")
+
+
+print(f"\n----\nTest Delete by Tags")
+delData = tcdb.delete(tags={'':''})
+print(f"Deleted {delData}")
+
+
 changedData = tcdb.read(ids=[testId])
 print(f"\nRecord {testId} changed:\n{changedData[testId]}")
 
