@@ -1,7 +1,7 @@
 import logging
 logging.basicConfig(level=logging.INFO)
 
-import json
+import json, random
 
 
 from TeleChanDB import TeleChanDB
@@ -61,9 +61,13 @@ for cId,cRecord in readData.items():
 	print(f"{cId}: {json.dumps(cRecord, indent=4)}")
 
 
+tagVal = int(random.random()*100)
 print(f"\n----\nTest Change for {tagVal}")
+changeOk = tcdb.change(testId, f"Changed to {tagVal}", tags={'someTag':tagVal, 'id':1})
+if not changeOk:
+	exit()
 
-tcdb.change(testId, 'Changed by id')
+
 changedData = tcdb.read(ids=[testId])
 print(f"\nRecord {testId} changed:\n{changedData[testId]}")
 
