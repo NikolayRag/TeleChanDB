@@ -46,11 +46,17 @@ tcdb.write('One more record.', tags={'someTag':3, 'otherTag':None})
 testId = tcdb.write('By id.', tags={'someTag':2})
 print(f"\n----\nTest List")
 tagsV = tcdb.list(['someTag', ''], ids=True)
+if tagsV==None:
+	exit()
+
 print(f"Tags listed: {tagsV}")
 
 
 print(f"\n----\nTest Read by Tags and Id")
 readData = tcdb.read(tags={'someTag':1}, ids=[testId])
+if not readData:
+	exit()
+
 for cId,cRecord in readData.items():
 	print(f"{cId}: {json.dumps(cRecord, indent=4)}")
 
